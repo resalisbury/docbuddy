@@ -1,16 +1,18 @@
 class DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   # GET /documents
   # GET /documents.json
   def index
-    @documents = Document.all
+    @documents = Document.where(user_id: current_user.id)
   end
 
   # GET /documents/1
   # GET /documents/1.json
-  def show
-  end
+  # def show
+  #   doc = Document.find(params[:id])
+  #   current_user.id == @document.user_id ? @document = doc : redirect_to :back
+  # end
 
   # GET /documents/new
   def new
