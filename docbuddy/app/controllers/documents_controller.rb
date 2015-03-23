@@ -14,7 +14,7 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = DocumentPdf.new
+        pdf = DocumentPdf.new(@document)
         send_data pdf.render, filename: "#{@document.name} - #{@document.id}",
                               type: "application/pdf",
                               disposition: "inline"
