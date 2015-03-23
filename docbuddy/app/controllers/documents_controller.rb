@@ -9,10 +9,19 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1
   # GET /documents/1.json
-  # def show
-  #   doc = Document.find(params[:id])
-  #   current_user.id == @document.user_id ? @document = doc : redirect_to :back
-  # end
+  def show
+    @document = Document.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = DocumentPdf.new
+        send_data pdf.render, filename: "#{@document.name} - #{@document.id}",
+                              type: "application/pdf",
+                              disposition: "inline"
+
+      end
+    end
+  end
 
   # GET /documents/new
   def new
